@@ -1,5 +1,6 @@
 # Built application files
 *.apk
+!HydraPing.apk
 *.aar
 *.ap_
 *.aab

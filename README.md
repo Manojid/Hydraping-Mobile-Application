@@ -5,7 +5,9 @@
 [![UI Toolkit](https://img.shields.io/badge/Jetpack%20Compose-BOM%202024.06.00-4285F4.svg)](https://developer.android.com/jetpack/compose)
 [![Architecture](https://img.shields.io/badge/Architecture-Clean%20%2B%20MVI%2FMVVM-brightgreen.svg)]()
 [![Database](https://img.shields.io/badge/Storage-Room%20SQLite%20%2B%20DataStore-orange.svg)](https://developer.android.com/training/data-storage/room)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Download APK](https://img.shields.io/badge/📥%20Download%20APK-HydraPing.apk%20(Direct)-00E5FF?style=for-the-badge&logo=android&logoColor=black)](HydraPing.apk?raw=true)
+
+> 🚀 **Direct APK Download**: Tap [**HydraPing.apk**](HydraPing.apk?raw=true) to download and install the latest build directly onto your Android device!
 
 **HydraPing** is a high-performance, offline-first smart hydration companion for Android built entirely with **Jetpack Compose**, **Kotlin Coroutines & Flows**, **Room SQLite**, and a custom **Cyber-Dark & Ocean Glow** design system.
 
