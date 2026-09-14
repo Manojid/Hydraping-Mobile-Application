@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">HydraPing</string>
+    <string name="app_tagline">Your Smart Hydration Character</string>
+    <string name="widget_name">HydraPing Character Widget</string>
+    <string name="widget_description">Keep your character on your home screen for quick 1-tap logging and live hydration mood.</string>
+    <string name="qs_tile_label">HydraPing</string>
+    <string name="notification_channel_name">HydraPing Reminders</string>
+    <string name="notification_channel_description">Character-driven gentle hydration nudges.</string>
+</resources>
