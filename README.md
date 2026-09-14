@@ -5,9 +5,19 @@
 [![UI Toolkit](https://img.shields.io/badge/Jetpack%20Compose-BOM%202024.06.00-4285F4.svg)](https://developer.android.com/jetpack/compose)
 [![Architecture](https://img.shields.io/badge/Architecture-Clean%20%2B%20MVI%2FMVVM-brightgreen.svg)]()
 [![Database](https://img.shields.io/badge/Storage-Room%20SQLite%20%2B%20DataStore-orange.svg)](https://developer.android.com/training/data-storage/room)
-[![Download APK](https://img.shields.io/badge/📥%20Download%20APK-HydraPing.apk%20(Direct)-00E5FF?style=for-the-badge&logo=android&logoColor=black)](HydraPing.apk?raw=true)
+[![Download APK](https://img.shields.io/badge/📥%20Direct%20Download-HydraPing.apk-00E5FF?style=for-the-badge&logo=android&logoColor=black)](https://github.com/Manojid/Hydraping-Mobile-Application/raw/main/HydraPing.apk)
+[![Releases](https://img.shields.io/badge/📦%20GitHub%20Releases-v1.0.0-blue?style=for-the-badge&logo=github)](https://github.com/Manojid/Hydraping-Mobile-Application/releases)
 
-> 🚀 **Direct APK Download**: Tap [**HydraPing.apk**](HydraPing.apk?raw=true) to download and install the latest build directly onto your Android device!
+---
+
+### 📥 Quick Download & Install
+Tap below to download and install the latest Android APK directly on your phone:
+- 🚀 **[Download HydraPing.apk (Direct Download Link)](https://github.com/Manojid/Hydraping-Mobile-Application/raw/main/HydraPing.apk)**
+- 🌐 **[Alternative Mirror (Raw CDN Link)](https://raw.githubusercontent.com/Manojid/Hydraping-Mobile-Application/main/HydraPing.apk)**
+
+*Note: When downloading on Android, tap "Download anyway" and enable "Install from this source" when prompted.*
+
+---
 
 **HydraPing** is a high-performance, offline-first smart hydration companion for Android built entirely with **Jetpack Compose**, **Kotlin Coroutines & Flows**, **Room SQLite**, and a custom **Cyber-Dark & Ocean Glow** design system.
 
