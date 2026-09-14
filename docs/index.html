@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HydraPing — Hydration Companion</title>
+<style>
+  :root {
+    --bg: #060a10;
+    --bg-alt: #0a0f17;
+    --card: #0d1420;
+    --border: #1c2836;
+    --text: #e7f1f8;
+    --text-dim: #93a5b8;
+    --cyan: #34e2e2;
+    --cyan-soft: rgba(52, 226, 226, 0.12);
+    --pink: #ff6bcb;
+    --amber: #ffb84d;
+    --radius: 16px;
+    --mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    line-height: 1.6;
+    scroll-behavior: smooth;
+  }
+
+  a { color: var(--cyan); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+  /* Nav */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: rgba(6, 10, 16, 0.85);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+  }
+  nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 66px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.05rem; }
+  .brand img { width: 30px; height: 30px; border-radius: 8px; }
+  .nav-links { display: flex; gap: 24px; font-size: 0.92rem; }
+  .nav-links a { color: var(--text-dim); }
+  .nav-links a:hover { color: var(--text); text-decoration: none; }
+  .nav-cta {
+    padding: 8px 16px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text) !important;
+    font-size: 0.88rem;
+  }
+  .nav-cta:hover { border-color: var(--cyan); text-decoration: none; }
+
+  /* Hero */
+  header.hero {
+    padding: 84px 0 60px;
+    text-align: center;
+    background:
+      radial-gradient(circle at 50% 0%, rgba(52,226,226,0.12), transparent 60%);
+  }
+  .hero img.logo {
+    width: 88px; height: 88px;
+    border-radius: 22px;
+    margin-bottom: 24px;
+    box-shadow: 0 0 60px rgba(52,226,226,0.25);
+  }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.8rem;
+    color: var(--cyan);
+    background: var(--cyan-soft);
+    padding: 6px 14px;
+    border-radius: 999px;
+    margin-bottom: 22px;
+    letter-spacing: 0.02em;
+  }
+  h1 {
+    font-size: clamp(2.1rem, 4.5vw, 3.1rem);
+    margin: 0 0 18px;
+    letter-spacing: -0.02em;
+  }
+  .hero p.lede {
+    max-width: 620px;
+    margin: 0 auto 34px;
+    color: var(--text-dim);
+    font-size: 1.08rem;
+  }
+  .hero-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 22px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    border: 1px solid transparent;
+  }
+  .btn:hover { text-decoration: none; }
+  .btn-primary { background: var(--cyan); color: #04141a; }
+  .btn-primary:hover { background: #6bedee; }
+  .btn-ghost { border-color: var(--border); color: var(--text); }
+  .btn-ghost:hover { border-color: var(--cyan); }
+
+  .stack-row { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 30px; }
+  .pill {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    color: var(--text-dim);
+    background: var(--bg-alt);
+    border: 1px solid var(--border);
+    padding: 5px 12px;
+    border-radius: 999px;
+  }
+
+  /* Sections */
+  section { padding: 68px 0; }
+  section.alt { background: var(--bg-alt); }
+  h2 { font-size: clamp(1.5rem, 3vw, 1.9rem); margin: 0 0 12px; letter-spacing: -0.01em; }
+  .section-intro { color: var(--text-dim); max-width: 640px; margin: 0 0 40px; }
+
+  /* Feature grid */
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 18px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; }
+  .card .icon {
+    width: 38px; height: 38px;
+    display: grid; place-items: center;
+    background: var(--cyan-soft);
+    border-radius: 9px;
+    margin-bottom: 14px;
+    font-size: 18px;
+  }
+  .card h3 { margin: 0 0 8px; font-size: 1.02rem; }
+  .card p { margin: 0; color: var(--text-dim); font-size: 0.92rem; }
+
+  /* Mascots */
+  .mascots { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 18px; }
+  .mascot-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 22px;
+    text-align: center;
+  }
+  .mascot-card .emoji { font-size: 2.2rem; margin-bottom: 10px; }
+  .mascot-card h3 { margin: 0 0 6px; font-size: 1rem; }
+  .mascot-card p { margin: 0; color: var(--text-dim); font-size: 0.88rem; }
+
+  /* Screenshots - phone mockups */
+  .phones {
+    display: flex;
+    gap: 22px;
+    overflow-x: auto;
+    padding: 10px 4px 20px;
+    scroll-snap-type: x proximity;
+  }
+  .phones::-webkit-scrollbar { height: 8px; }
+  .phones::-webkit-scrollbar-thumb { background: var(--border); border-radius: 8px; }
+  .phone {
+    flex: 0 0 auto;
+    width: 220px;
+    scroll-snap-align: start;
+  }
+  .phone-frame {
+    border: 2px solid var(--border);
+    border-radius: 26px;
+    padding: 6px;
+    background: #000;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+  }
+  .phone-frame img {
+    display: block;
+    width: 100%;
+    border-radius: 20px;
+  }
+  .phone .caption {
+    margin-top: 12px;
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--text-dim);
+  }
+  .phone .caption strong { color: var(--text); display: block; margin-bottom: 2px; font-size: 0.92rem; }
+
+  /* How it works / architecture */
+  .steps { counter-reset: step; display: grid; gap: 14px; }
+  .step {
+    display: flex; gap: 18px; align-items: flex-start;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px 22px;
+  }
+  .step .num {
+    counter-increment: step;
+    flex-shrink: 0;
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    background: var(--cyan-soft);
+    color: var(--cyan);
+    display: grid; place-items: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+  }
+  .step p { margin: 0; color: var(--text-dim); font-size: 0.93rem; }
+  .step code { color: var(--text); }
+
+  code, pre { font-family: var(--mono); font-size: 0.86rem; }
+  code { background: rgba(255,255,255,0.06); padding: 2px 6px; border-radius: 5px; }
+  pre {
+    background: #03060a;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 18px;
+    overflow-x: auto;
+    color: #d6dbe6;
+  }
+  pre code { background: none; padding: 0; }
+
+  .callout {
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--amber);
+    background: var(--card);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    padding: 22px 26px;
+  }
+  .callout h3 { margin: 0 0 8px; font-size: 1rem; color: var(--amber); display: flex; align-items: center; gap: 8px; }
+  .callout p { margin: 0; color: var(--text-dim); font-size: 0.93rem; }
+
+  .run-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media (max-width: 720px) {
+    .run-grid { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+  }
+  .run-card h3 {
+    margin: 0 0 12px;
+    font-size: 0.95rem;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-weight: 600;
+  }
+
+  footer {
+    padding: 40px 0;
+    text-align: center;
+    color: var(--text-dim);
+    font-size: 0.85rem;
+    border-top: 1px solid var(--border);
+  }
+  footer a { color: var(--text-dim); }
+  footer a:hover { color: var(--cyan); }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">
+      <img src="assets/logo.png" alt="HydraPing logo">
+      HydraPing
+    </div>
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#screenshots">Screenshots</a>
+      <a href="#architecture">Architecture</a>
+      <a href="#run-it">Build it</a>
+    </div>
+    <a class="nav-cta" href="https://github.com/Manojid/Hydraping-Mobile-Application" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <img class="logo" src="assets/logo.png" alt="HydraPing app icon">
+    <span class="eyebrow">🤖 Android · Kotlin · Jetpack Compose</span>
+    <h1>A hydration companion that actually<br>makes you want to drink water.</h1>
+    <p class="lede">
+      HydraPing is an offline-first Android app that turns hydration tracking into something
+      alive — animated mascots, adaptive reminders, real-time weather boosts, and rich
+      interactive notifications. 100% on-device, built entirely with Jetpack Compose.
+    </p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="https://github.com/Manojid/Hydraping-Mobile-Application" target="_blank" rel="noopener">View source on GitHub</a>
+      <a class="btn btn-ghost" href="#run-it">Build from source</a>
+    </div>
+    <div class="stack-row">
+      <span class="pill">Kotlin 2.0</span>
+      <span class="pill">Jetpack Compose</span>
+      <span class="pill">Room + DataStore</span>
+      <span class="pill">Glance Widgets</span>
+      <span class="pill">MVI/MVVM</span>
+      <span class="pill">Open-Meteo API</span>
+    </div>
+  </div>
+</header>
+
+<section id="features">
+  <div class="wrap">
+    <h2>What it does</h2>
+    <p class="section-intro">
+      Not a generic hydration timer — every feature is built to make reminders something
+      you actually respond to.
+    </p>
+    <div class="grid">
+      <div class="card">
+        <div class="icon">⚡</div>
+        <h3>Animated mascot companions</h3>
+        <p>Pikachu, Jerry, or Whiskers react across 4 mood states — thirsty, happy, celebrating, sleeping — based on your real progress.</p>
+      </div>
+      <div class="card">
+        <div class="icon">🌊</div>
+        <h3>Live background animations</h3>
+        <p>Liquid Wave, Rippling Pulse, or Cyber Orb — fluid real-time animation behind your mascot on the dashboard.</p>
+      </div>
+      <div class="card">
+        <div class="icon">🔔</div>
+        <h3>Adaptive smart reminders</h3>
+        <p>A pacing engine recalculates reminder intervals and catch-up volumes from your intake velocity and active hours — not a fixed timer.</p>
+      </div>
+      <div class="card">
+        <div class="icon">📲</div>
+        <h3>Rich heads-up notifications</h3>
+        <p>Full progress, character dialogue, and one-tap <code>Drink 250 ml</code> / <code>Log</code> / <code>Snooze</code> — no expanding required.</p>
+      </div>
+      <div class="card">
+        <div class="icon">🔊</div>
+        <h3>Procedural sound design</h3>
+        <p>Zero-latency 16-bit PCM audio synthesized on-device via <code>AudioTrack</code> — Crystal Chime, Water Drop, Radar Ping, Bubble Pop.</p>
+      </div>
+      <div class="card">
+        <div class="icon">☀️</div>
+        <h3>Real-time weather boosts</h3>
+        <p>Pulls live temperature from the keyless Open-Meteo API and bumps your target by up to 500 ml on extreme heat days.</p>
+      </div>
+      <div class="card">
+        <div class="icon">📊</div>
+        <h3>Trends &amp; personal records</h3>
+        <p>On-track pacing %, average sip volume, active streaks, peak drinking hours, and all-time best-day / longest-streak milestones.</p>
+      </div>
+      <div class="card">
+        <div class="icon">🔒</div>
+        <h3>100% offline-first</h3>
+        <p>Everything lives on-device in Room SQLite. No account, no cloud sync — with JSON/CSV backup &amp; restore whenever you want it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="wrap">
+    <h2>Meet the companions</h2>
+    <p class="section-intro">Each one adapts its face in real time to how well you're keeping pace.</p>
+    <div class="mascots">
+      <div class="mascot-card">
+        <div class="emoji">⚡</div>
+        <h3>Pikachu</h3>
+        <p>High-voltage Pokémon companion, charging up your daily streak.</p>
+      </div>
+      <div class="mascot-card">
+        <div class="emoji">🐭</div>
+        <h3>Jerry</h3>
+        <p>Cheeky mouse from Tom &amp; Jerry, outsmarting dehydration one sip at a time.</p>
+      </div>
+      <div class="mascot-card">
+        <div class="emoji">🐾</div>
+        <h3>Whiskers</h3>
+        <p>Calm, stylish, and clever feline companion for a quieter vibe.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="screenshots">
+  <div class="wrap">
+    <h2>Screenshots</h2>
+    <p class="section-intro">Cyber-dark glassmorphism throughout — from the dashboard to the notification shade.</p>
+    <div class="phones">
+      <div class="phone">
+        <div class="phone-frame"><img src="assets/home-dashboard.jpg" alt="Home dashboard" loading="lazy"></div>
+        <div class="caption"><strong>Home Dashboard</strong>progress, mascot &amp; live animation</div>
+      </div>
+      <div class="phone">
+        <div class="phone-frame"><img src="assets/notification.jpg" alt="Rich notification" loading="lazy"></div>
+        <div class="caption"><strong>Notification</strong>heads-up with instant action buttons</div>
+      </div>
+      <div class="phone">
+        <div class="phone-frame"><img src="assets/trends.jpg" alt="Trends screen" loading="lazy"></div>
+        <div class="caption"><strong>Trends</strong>pacing, streaks &amp; personal records</div>
+      </div>
+      <div class="phone">
+        <div class="phone-frame"><img src="assets/mascot-select.jpg" alt="Mascot selection screen" loading="lazy"></div>
+        <div class="caption"><strong>Mascot Select</strong>choose your companion</div>
+      </div>
+      <div class="phone">
+        <div class="phone-frame"><img src="assets/settings.jpg" alt="Settings screen" loading="lazy"></div>
+        <div class="caption"><strong>Settings</strong>targets, intervals &amp; schedule</div>
+      </div>
+      <div class="phone">
+        <div class="phone-frame"><img src="assets/widget.jpg" alt="Home screen widget" loading="lazy"></div>
+        <div class="caption"><strong>Widget</strong>Glance home screen companion</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="architecture">
+  <div class="wrap">
+    <h2>Architecture</h2>
+    <p class="section-intro">Clean architecture with MVI/MVVM, entirely offline, entirely Compose.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="num"></div>
+        <p><strong style="color:var(--text)">UI layer</strong> — 100% Jetpack Compose with Material 3 and a custom Cyber-Dark design system. State managed via Kotlin <code>StateFlow</code> / <code>SharedFlow</code>.</p>
+      </div>
+      <div class="step">
+        <div class="num"></div>
+        <p><strong style="color:var(--text)">Domain layer</strong> — the Adaptive Reminder Engine and Dialogue Engine compute pacing, catch-up volumes, and mascot dialogue from live intake data.</p>
+      </div>
+      <div class="step">
+        <div class="num"></div>
+        <p><strong style="color:var(--text)">Data layer</strong> — Room SQLite for entries and history, Jetpack DataStore for preferences, and a thin client for the Open-Meteo weather API.</p>
+      </div>
+      <div class="step">
+        <div class="num"></div>
+        <p><strong style="color:var(--text)">System integration</strong> — custom notification <code>RemoteViews</code>, broadcast receivers for reminders and quick-drink actions, and a Glance home screen widget.</p>
+      </div>
+    </div>
+
+    <div style="height: 30px;"></div>
+
+    <div class="callout">
+      <h3>🧪 Testing &amp; build</h3>
+      <p>
+        JUnit 4 suite covering the reminder pacing logic with mockable timestamp engines (30/30 passing).
+        Min SDK 26 (Android 8.0), target SDK 35 (Android 15), Kotlin 2.0.20, signed with APK
+        Signature Scheme v2.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section id="run-it">
+  <div class="wrap">
+    <h2>Build it yourself</h2>
+    <p class="section-intro">Requires JDK 17+ and Android SDK (API 35, Build-Tools 35.0.1).</p>
+    <div class="run-grid">
+      <div class="run-card">
+        <h3>Clone</h3>
+        <pre><code>git clone https://github.com/Manojid/Hydraping-Mobile-Application.git
+cd Hydraping-Mobile-Application</code></pre>
+      </div>
+      <div class="run-card">
+        <h3>Build &amp; test</h3>
+        <pre><code>./gradlew testDebugUnitTest assembleDebug
+
+# APK lands at:
+# app/build/outputs/apk/debug/app-debug.apk</code></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    HydraPing &middot; Built by Manoj &middot; <a href="https://github.com/Manojid/Hydraping-Mobile-Application" target="_blank" rel="noopener">Source on GitHub</a>
+  </div>
+</footer>
+
+</body>
+</html>
