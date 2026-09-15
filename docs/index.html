@@ -115,6 +115,16 @@
   .btn-ghost { border-color: var(--border); color: var(--text); }
   .btn-ghost:hover { border-color: var(--cyan); }
 
+  .download-row { margin-bottom: 16px; }
+  .btn-download {
+    background: var(--cyan);
+    color: #04141a;
+    font-size: 1.05rem;
+    padding: 15px 30px;
+    box-shadow: 0 10px 32px rgba(52,226,226,0.4);
+  }
+  .btn-download:hover { background: #6bedee; transform: translateY(-1px); }
+
   .stack-row { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 30px; }
   .pill {
     font-family: var(--mono);
@@ -293,8 +303,13 @@
       alive — animated mascots, adaptive reminders, real-time weather boosts, and rich
       interactive notifications. 100% on-device, built entirely with Jetpack Compose.
     </p>
+    <div class="hero-actions download-row">
+      <a class="btn btn-download" href="https://github.com/Manojid/Hydraping-Mobile-Application/raw/main/HydraPing.apk">
+        ⬇ Download APK
+      </a>
+    </div>
     <div class="hero-actions">
-      <a class="btn btn-primary" href="https://github.com/Manojid/Hydraping-Mobile-Application" target="_blank" rel="noopener">View source on GitHub</a>
+      <a class="btn btn-ghost" href="https://github.com/Manojid/Hydraping-Mobile-Application" target="_blank" rel="noopener">View source on GitHub</a>
       <a class="btn btn-ghost" href="#run-it">Build from source</a>
     </div>
     <div class="stack-row">
