@@ -54,6 +54,7 @@ Thumbs.db
 *.jks
 *.keystore
 secrets.properties
+keystore.properties
 
 # Local tools cache
 tools/
